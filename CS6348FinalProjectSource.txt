@@ -31,7 +31,7 @@
 }
 """
 
-3) Lines of code found reading chat data:
+3) Lines of code found identifying the current URL of the user:
 
 /*const getGptSelectors = () => {
     const url = window.location.href;
