@@ -1,4 +1,4 @@
-Lines of code found that assist in stealing chat data: 
+1) Lines of code found that assist in stealing chat data: 
 
 /*function detailedAns(answer){
     chrome.tabs.onUpdated.addListener(async (e, t, n) => {
@@ -21,8 +21,7 @@ Lines of code found that assist in stealing chat data:
     });
   }*/
 
-As seen in our demo, the values stored in "gptChatVars" are seen (slightly different names, might have been updated
-or was a different extension) in the JSON text that is sent by the extension:
+2) JSON text found being sent over network:
 """
 {
   "chatId":" 76f94183-bc5a-4fab-87c8-ff41f4f9f075", 
@@ -32,8 +31,7 @@ or was a different extension) in the JSON text that is sent by the extension:
 }
 """
 
-Once it sees the current URL, it looks to see if the URL contains "chatgpt" or "deepseek". This is a snippet of code found that
-shows how they do it:
+3) Lines of code found reading chat data:
 
 /*const getGptSelectors = () => {
     const url = window.location.href;
